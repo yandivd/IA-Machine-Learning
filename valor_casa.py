@@ -2,10 +2,12 @@ import tensorflow as tf
 import numpy as np
 
 # Datos de entrenamiento
-metros_cuadrados = np.array([100, 400, 200, 250, 300], dtype=float)
-cuartos = np.array([2, 5, 2, 1, 3], dtype=int)
-banos = np.array([1, 3, 1, 1, 2], dtype=int)
-precios = np.array([2000, 10000, 3000, 2500, 4000], dtype=float)
+
+metros_cuadrados = np.random.randint(100, 500, 1000)
+cuartos = np.random.randint(2, 6, 1000, dtype=int)
+banos = np.random.randint(1, 4, 1000, dtype=int)
+precios = np.random.randint(2000, 10000, 1000)
+
 
 # Combina todas las características en un solo tensor
 caracteristicas = np.column_stack((metros_cuadrados, cuartos, banos))
@@ -19,10 +21,18 @@ modelo.compile(
 )
 
 print('Iniciando entrenamiento...')
-modelo.fit(caracteristicas, precios, epochs=1000, verbose=False)
+historial = modelo.fit(caracteristicas, precios, epochs=1000, verbose=True)
 print('Entrenamiento Finalizado')
 
+import  matplotlib.pyplot as plt
+
+plt.xlabel('#Epoca')
+plt.ylabel('Magnitud de Perdida')
+plt.plot(historial.history['loss'])
+plt.savefig("valorCasas.png")
+
+
 print('Haciendo predicción')
-nueva_casa = np.array([100, 1, 1], dtype=float).reshape(1, 3)  # Nuevas características
+nueva_casa = np.array([50, 1, 1], dtype=float).reshape(1, 3)  # Nuevas características
 precio = modelo.predict(nueva_casa)
 print('El precio de la nueva casa es de ${:.2f}'.format(precio[0][0]))
