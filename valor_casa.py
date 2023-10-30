@@ -11,9 +11,6 @@ precios = np.array([2000, 10000, 3000, 2500, 4000], dtype=float)
 caracteristicas = np.column_stack((metros_cuadrados, cuartos, banos))
 
 capa = tf.keras.layers.Dense(units=3, input_shape=[3])
-# oculta1 = tf.keras.layers.Dense(units=3)
-# oculta2 = tf.keras.layers.Dense(units=3)
-# salida = tf.keras.layers.Dense(units=1)
 modelo = tf.keras.Sequential([capa])
 
 modelo.compile(
